@@ -54,7 +54,7 @@ fmt.Println(p)
 It is also possible to create a passphrase with more or less words. Please note that 6 words is a sensitiv default and less isn't recommended!
 ```go
 p, err := diceware.NewPassphrase(
-    Words(7), // Passphrase with 7 words
+    diceware.Words(7), // Passphrase with 7 words
 )
 if err != nil {
     // ...
