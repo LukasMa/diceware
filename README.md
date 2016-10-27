@@ -78,7 +78,7 @@ Copyright (c) 2016 Lukas Malkmus
 Distributed under MIT License (`The MIT License`). See [LICENSE](LICENSE) for more information.
 
 [build]: https://travis-ci.org/LukasMa/diceware
-[build_badge]: https://travis-ci.org/LukasMa/diceware?branch=master
+[build_badge]: https://travis-ci.org/LukasMa/diceware.svg?branch=master
 [coverage]: https://coveralls.io/github/LukasMa/diceware
 [coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge?branch=master
 [report]: https://goreportcard.com/report/github.com/LukasMa/diceware
