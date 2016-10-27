@@ -80,7 +80,7 @@ Distributed under MIT License (`The MIT License`). See [LICENSE](LICENSE) for mo
 [build]: https://travis-ci.org/LukasMa/diceware
 [build_badge]: https://travis-ci.org/LukasMa/diceware.svg?branch=master
 [coverage]: https://coveralls.io/github/LukasMa/diceware
-[coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge?branch=master
+[coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge.svg?branch=master
 [report]: https://goreportcard.com/report/github.com/LukasMa/diceware
 [report_badge]: https://goreportcard.com/badge/github.com/LukasMa/diceware
 [docs]: https://godoc.org/github.com/LukasMa/diceware
