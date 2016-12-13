@@ -12,16 +12,19 @@ const (
 	// be added to a passphrase to increase security without adding another
 	// word. It isn't required by default.
 	DefaultExtra = false
+
 	// DefaultWords is the default amount of words used to build a passphrase.
 	// This is set to a sensitive default.
 	// Ref: https://diceware.blogspot.de/2014/03/time-to-add-word.html
 	DefaultWords = 6
+
 	// MinPhraseLength is the smallest amount of characters allowed in a
 	// passphrase. Since generation is random, there is a very small chance of
 	// getting a passphrase which has less than 17 characters in total which IS
 	// NOT considered save.
 	// Ref: http://world.std.com/~reinhold/dicewarefaq.html#14characters
 	MinPhraseLength = 17
+
 	// MinWords is the required amount of words used to build a passphrase. This
 	// values exists just for convenience and it IS NOT SAFE to use a one word
 	// passphrase!

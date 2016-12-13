@@ -1,3 +1,5 @@
-// Package diceware provides an implementation of the diceware passphrase
-// generation method.
+/*
+Package diceware provides an implementation of the diceware passphrase
+generation method.
+*/
 package diceware
