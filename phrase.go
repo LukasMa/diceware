@@ -5,6 +5,7 @@ import (
 	"errors"
 	"math"
 	"math/big"
+	"strings"
 )
 
 const (
@@ -95,6 +96,16 @@ func NewPassphrase(options ...Option) (*Passphrase, error) {
 
 	// Return passphrase.
 	return p, nil
+}
+
+// Humanize will return a human readable string which has a whitspace between
+// each word.
+func (p Passphrase) Humanize() string {
+	str := ""
+	for _, word := range p.words {
+		str += word.String() + " "
+	}
+	return strings.TrimSpace(str)
 }
 
 // String implements the Stringer interface.

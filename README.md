@@ -51,7 +51,7 @@ Since this will pull the master branch, you should use a dependency manager like
 
 ### Usage
 
-#### Creating passphrases
+#### Creation
 Create a passphrase with default values (6 words, no extra):
 ```go
 p, err := diceware.NewPassphrase()
@@ -80,6 +80,12 @@ All passphrases can be _regenerated_. This means the options you applied in the
 p.Regenerate()
 fmt.Println(p)
 ```
+
+#### Tips & Tricks
+- Passphrase implements the Stringer interface thus it can be passed to every
+function accepting this interface. For example `fmt.Println()`.
+- The `String()` method isn't very "human friendly". Use the `Humanize()` method
+to print the passphrase with whitspace seperated words.
 
 ### Contributing
 Please feel free to submit Pull Requests or Issues.
