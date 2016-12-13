@@ -34,8 +34,8 @@ the old-school way by actually throwing real dices by hand. This is the only
 - [x] Simple API
 - [x] Only go standard library
 - [x] Passphrases with choosable length
-- [ ] Diceware extras for stronger passphrases
-- [ ] Verify passphrases
+- [x] Diceware extras for stronger passphrases
+- [x] Verify passphrases
 
 #### Todo
 - [ ] Multiple word lists in multiple languages
@@ -73,6 +73,9 @@ if err != nil {
 fmt.Println(p)
 ```
 
+**Note!** If you want to use less than 6 words, be sure to set the `Validate` option
+to `false`! Otherwise _validation will fail_!
+
 #### Regeneration
 All passphrases can be _regenerated_. This means the options you applied in the
 `NewPassphrase()` function are reused for the passphrase generation.
@@ -86,6 +89,8 @@ fmt.Println(p)
 function accepting this interface. For example `fmt.Println()`.
 - The `String()` method isn't very "human friendly". Use the `Humanize()` method
 to print the passphrase with whitspace seperated words.
+- Passphrase strength can be improved by adding an extra. Do this by setting the
+Extra option: `Extra(true)`
 
 ### Contributing
 Please feel free to submit Pull Requests or Issues.

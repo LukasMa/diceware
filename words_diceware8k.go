@@ -9,7 +9,7 @@ var extras = []string{
 	"4", "5", "6", "7", "8", "9",
 }
 
-var diceware8k = []Word{
+var diceware8k = []string{
 	"a",
 	"a&p",
 	"a's",

@@ -19,10 +19,13 @@ const (
 	// Ref: https://diceware.blogspot.de/2014/03/time-to-add-word.html
 	DefaultWords = 6
 
+	// DefaultValidate is the default value for the validation step.
+	DefaultValidate = true
+
 	// MinPhraseLength is the smallest amount of characters allowed in a
-	// passphrase. Since generation is random, there is a very small chance of
-	// getting a passphrase which has less than 17 characters in total which IS
-	// NOT considered save.
+	// passphrase to pass the validation. Since generation is random, there is a
+	// very small chance of getting a passphrase which has less than 17
+	// characters in total which IS NOT considered save.
 	// Ref: http://world.std.com/~reinhold/dicewarefaq.html#14characters
 	MinPhraseLength = 17
 
@@ -35,12 +38,36 @@ const (
 var (
 	// ErrInvalidWordCount is raised when the specified amount of words drops
 	// below the MinWords constant.
-	ErrInvalidWordCount = errors.New("The amount of words is invalid.")
+	ErrInvalidWordCount = errors.New("The amount of words is invalid (drops below the value defined by MinWords)!")
+
+	// ErrValidationFailed is raised when the generated passphrase doesn't met
+	// the default security standards.
+	ErrValidationFailed = errors.New("Invalid passphrase was generated! Use the Regenerate() method to trigger generation with the same settings.")
 )
 
 // An Option serves as a functional parameter which can be used to costumize the
 // generation of the passphrase.
 type Option func(p *Passphrase) error
+
+// Extra is an Option that specifies whaether an extra will be added to the
+// passphrase or not.
+func Extra(extra bool) Option {
+	return func(p *Passphrase) error { return p.setExtra(extra) }
+}
+func (p *Passphrase) setExtra(extra bool) error {
+	p.extra = extra
+	return nil
+}
+
+// Validate is an Option that specifies whaether passphrase validation will be
+// performed or not.
+func Validate(validate bool) Option {
+	return func(p *Passphrase) error { return p.setValidate(validate) }
+}
+func (p *Passphrase) setValidate(validate bool) error {
+	p.validate = validate
+	return nil
+}
 
 // Words is an Option that defines the amount of words that should be picked for
 // the new Passphrase.
@@ -55,23 +82,14 @@ func (p *Passphrase) setWords(words int) error {
 	return nil
 }
 
-// Extra is an Option that specifies whaether an extra will be added to the
-// passphrase or not.
-func Extra(extra bool) Option {
-	return func(p *Passphrase) error { return p.setExtra(extra) }
-}
-func (p *Passphrase) setExtra(extra bool) error {
-	p.extra = extra
-	return nil
-}
-
-// A Passphrase is a diceware passphrase. It is a build from a handful of words
+// A Passphrase is a diceware passphrase. It is build from a handful of words
 // that are randomly picked from a list of words.
 // Ref: http://world.std.com/~reinhold/diceware.html
 type Passphrase struct {
 	extra     bool
+	validate  bool
 	wordCount int
-	words     []Word
+	words     []string
 }
 
 // NewPassphrase defines, generates, validates and returns a new diceware
@@ -80,6 +98,7 @@ func NewPassphrase(options ...Option) (*Passphrase, error) {
 	// Create passphrase with default settings.
 	p := &Passphrase{
 		extra:     DefaultExtra,
+		validate:  DefaultValidate,
 		wordCount: DefaultWords,
 		words:     nil,
 	}
@@ -94,6 +113,11 @@ func NewPassphrase(options ...Option) (*Passphrase, error) {
 	// Generate passphrase.
 	p.generate()
 
+	// Validate passphrase.
+	if p.validate && !p.Validate() {
+		return nil, ErrValidationFailed
+	}
+
 	// Return passphrase.
 	return p, nil
 }
@@ -103,7 +127,7 @@ func NewPassphrase(options ...Option) (*Passphrase, error) {
 func (p Passphrase) Humanize() string {
 	str := ""
 	for _, word := range p.words {
-		str += word.String() + " "
+		str += word + " "
 	}
 	return strings.TrimSpace(str)
 }
@@ -112,29 +136,55 @@ func (p Passphrase) Humanize() string {
 func (p Passphrase) String() string {
 	str := ""
 	for _, word := range p.words {
-		str += word.String()
+		str += word
 	}
 	return str
 }
 
 // Regenerate will generate the passphrase from scratch but keep the originally
 // provided parameters.
-func (p *Passphrase) Regenerate() {
+func (p *Passphrase) Regenerate() error {
+	// Re(generate) passphrase.
 	p.generate()
+
+	// Validate passphrase.
+	if p.validate && !p.Validate() {
+		return ErrValidationFailed
+	}
+
+	return nil
+}
+
+// Validate verifies that the passphrase mets certain standards like a secure
+// length and word count.
+func (p *Passphrase) Validate() bool {
+	return (MinPhraseLength <= len(p.String())) && (DefaultWords <= p.wordCount)
 }
 
 func (p *Passphrase) generate() {
 	p.words = nil
 	for i := 0; i < p.wordCount; i++ {
-		id := generateID()
-		p.words = append(p.words, GetWord(id))
+		id := generateID(math.MaxInt64)
+		p.words = append(p.words, getWord(id))
+	}
+
+	if p.extra {
+		eid := generateID(36)
+		wc := generateID(int64(len(p.words)))
+		p.words[wc] += extras[eid]
 	}
 }
 
-func generateID() int64 {
-	n, err := rand.Int(rand.Reader, big.NewInt(math.MaxInt64))
+func generateID(from int64) int64 {
+	n, err := rand.Int(rand.Reader, big.NewInt(from))
 	if err != nil {
 		panic(err)
 	}
 	return n.Int64()
+}
+
+// getWord retrieves the requested word from the standard word list. The
+// function also handles integers that are overflowing the max id of 8191.
+func getWord(id int64) string {
+	return diceware8k[id&8191]
 }
