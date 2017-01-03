@@ -96,7 +96,7 @@ Extra option: `Extra(true)`
 Please feel free to submit Pull Requests or Issues.
 
 ### License
-Copyright (c) 2016 Lukas Malkmus
+Copyright (c) 2017 Lukas Malkmus
 
 Distributed under MIT License (`The MIT License`). See [LICENSE](LICENSE) for
 more information.
