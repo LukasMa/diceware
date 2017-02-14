@@ -1,7 +1,8 @@
 # lukasma/diceware
 > Diceware passphrases in go. - by **[Lukas Malkmus](https://github.com/LukasMa)**
 
-[![Build Status][build_badge]][build]
+[![TravisCI Status][travis_badge]][travis]
+[![CircleCI Status][circle_badge]][circle]
 [![Coverage Status][coverage_badge]][coverage]
 [![Go Report][report_badge]][report]
 [![GoDoc][docs_badge]][docs]
@@ -101,9 +102,11 @@ Copyright (c) 2017 Lukas Malkmus
 Distributed under MIT License (`The MIT License`). See [LICENSE](LICENSE) for
 more information.
 
-[build]: https://travis-ci.org/LukasMa/diceware
-[build_badge]: https://travis-ci.org/LukasMa/diceware.svg?branch=master
-[coverage]: https://coveralls.io/github/LukasMa/diceware
+[travis]: https://travis-ci.org/LukasMa/diceware
+[travis_badge]: https://travis-ci.org/LukasMa/diceware.svg
+[circle]: https://circleci.com/gh/LukasMa/diceware
+[circle_badge]: https://circleci.com/gh/LukasMa/diceware.svg?style=svg
+[coverage]: https://coveralls.io/github/LukasMa/diceware?branch=master
 [coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge.svg?branch=master
 [report]: https://goreportcard.com/report/github.com/LukasMa/diceware
 [report_badge]: https://goreportcard.com/badge/github.com/LukasMa/diceware
@@ -112,4 +115,4 @@ more information.
 [release]: https://github.com/LukasMa/diceware/releases
 [release_badge]: https://img.shields.io/github/release/LukasMa/diceware.svg
 [license]: https://opensource.org/licenses/MIT
-[license_badge]: https://img.shields.io/badge/liecense-MIT-blue.svg
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
