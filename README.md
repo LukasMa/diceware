@@ -97,10 +97,12 @@ Extra option: `Extra(true)`
 Please feel free to submit Pull Requests or Issues.
 
 ### License
-Copyright (c) 2017 Lukas Malkmus
+© Lukas Malkmus, 2017
 
-Distributed under MIT License (`The MIT License`). See [LICENSE](LICENSE) for
-more information.
+Distributed under MIT License (`The MIT License`).
+
+See [LICENSE](LICENSE) for more information.
+
 
 [travis]: https://travis-ci.org/LukasMa/diceware
 [travis_badge]: https://travis-ci.org/LukasMa/diceware.svg
