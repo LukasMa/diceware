@@ -1,8 +1,7 @@
 # lukasma/diceware
 > Diceware passphrases in go. - by **[Lukas Malkmus](https://github.com/LukasMa)**
 
-[![TravisCI Status][travis_badge]][travis]
-[![CircleCI Status][circle_badge]][circle]
+[![Travis Status][travis_badge]][travis]
 [![Coverage Status][coverage_badge]][coverage]
 [![Go Report][report_badge]][report]
 [![GoDoc][docs_badge]][docs]
@@ -106,8 +105,6 @@ See [LICENSE](LICENSE) for more information.
 
 [travis]: https://travis-ci.org/LukasMa/diceware
 [travis_badge]: https://travis-ci.org/LukasMa/diceware.svg
-[circle]: https://circleci.com/gh/LukasMa/diceware
-[circle_badge]: https://circleci.com/gh/LukasMa/diceware.svg?style=svg
 [coverage]: https://coveralls.io/github/LukasMa/diceware?branch=master
 [coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge.svg?branch=master
 [report]: https://goreportcard.com/report/github.com/LukasMa/diceware
