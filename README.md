@@ -1,5 +1,5 @@
-# lukasma/diceware
-> Diceware passphrases in go. - by **[Lukas Malkmus](https://github.com/LukasMa)**
+# lukasmalkmus/diceware
+> Diceware passphrases in go. - by **[Lukas Malkmus](https://github.com/lukasmalkmus)**
 
 [![Travis Status][travis_badge]][travis]
 [![Coverage Status][coverage_badge]][coverage]
@@ -44,7 +44,7 @@ the old-school way by actually throwing real dices by hand. This is the only
 ### Installation
 The easiest way to install this package is to use `go get`:
 ```go
-go get -u -v github.com/LukasMa/diceware
+go get -u -v github.com/lukasmalkmus/diceware
 ```
 Since this will pull the master branch, you should use a dependency manager like
 [glide](http://glide,sh) to be on the safe side and retrieve a tagged release.
@@ -103,15 +103,15 @@ Distributed under MIT License (`The MIT License`).
 See [LICENSE](LICENSE) for more information.
 
 
-[travis]: https://travis-ci.org/LukasMa/diceware
-[travis_badge]: https://travis-ci.org/LukasMa/diceware.svg
-[coverage]: https://coveralls.io/github/LukasMa/diceware?branch=master
-[coverage_badge]: https://coveralls.io/repos/github/LukasMa/diceware/badge.svg?branch=master
-[report]: https://goreportcard.com/report/github.com/LukasMa/diceware
-[report_badge]: https://goreportcard.com/badge/github.com/LukasMa/diceware
-[docs]: https://godoc.org/github.com/LukasMa/diceware
-[docs_badge]: https://godoc.org/github.com/LukasMa/diceware?status.svg
-[release]: https://github.com/LukasMa/diceware/releases
-[release_badge]: https://img.shields.io/github/release/LukasMa/diceware.svg
+[travis]: https://travis-ci.org/lukasmalkmus/diceware
+[travis_badge]: https://travis-ci.org/lukasmalkmus/diceware.svg
+[coverage]: https://coveralls.io/github/lukasmalkmus/diceware?branch=master
+[coverage_badge]: https://coveralls.io/repos/github/lukasmalkmus/diceware/badge.svg?branch=master
+[report]: https://goreportcard.com/report/github.com/lukasmalkmus/diceware
+[report_badge]: https://goreportcard.com/badge/github.com/lukasmalkmus/diceware
+[docs]: https://godoc.org/github.com/lukasmalkmus/diceware
+[docs_badge]: https://godoc.org/github.com/lukasmalkmus/diceware?status.svg
+[release]: https://github.com/lukasmalkmus/diceware/releases
+[release_badge]: https://img.shields.io/github/release/lukasmalkmus/diceware.svg
 [license]: https://opensource.org/licenses/MIT
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
