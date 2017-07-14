@@ -13,10 +13,9 @@
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Features](#features)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#License)
+3. [Usage](#usage)
+4. [Contributing](#contributing)
+5. [License](#License)
 
 ### Introduction
 Package **diceware** is a simple implementation of the
@@ -41,15 +40,15 @@ the old-school way by actually throwing real dices by hand. This is the only
 - [ ] Multiple word lists in multiple languages
 - [ ] Read word list from file/buffer (`io.Reader`)
 
-### Installation
-The easiest way to install this package is to use `go get`:
-```go
+### Usage
+#### Installation
+Please use a dependency manager like [glide](http://glide.sh) to make sure you
+use a tagged release.
+
+Install using `go get`:
+```bash
 go get -u -v github.com/lukasmalkmus/diceware
 ```
-Since this will pull the master branch, you should use a dependency manager like
-[glide](http://glide,sh) to be on the safe side and retrieve a tagged release.
-
-### Usage
 
 #### Creation
 Create a passphrase with default values (6 words, no extra):
@@ -93,7 +92,7 @@ to print the passphrase with whitspace seperated words.
 Extra option: `Extra(true)`
 
 ### Contributing
-Please feel free to submit Pull Requests or Issues.
+Feel free to submit PRs or to fill Issues. Every kind of help is appreciated.
 
 ### License
 © Lukas Malkmus, 2017

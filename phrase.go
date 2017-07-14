@@ -38,11 +38,11 @@ const (
 var (
 	// ErrInvalidWordCount is raised when the specified amount of words drops
 	// below the MinWords constant.
-	ErrInvalidWordCount = errors.New("The amount of words is invalid (drops below the value defined by MinWords)!")
+	ErrInvalidWordCount = errors.New("diceware: amount of words is invalid")
 
 	// ErrValidationFailed is raised when the generated passphrase doesn't met
 	// the default security standards.
-	ErrValidationFailed = errors.New("Invalid passphrase was generated! Use the Regenerate() method to trigger generation with the same settings.")
+	ErrValidationFailed = errors.New("diceware: invalid passphrase was generated")
 )
 
 // An Option serves as a functional parameter which can be used to costumize the
@@ -111,11 +111,8 @@ func NewPassphrase(options ...Option) (*Passphrase, error) {
 	}
 
 	// Generate passphrase.
-	p.generate()
-
-	// Validate passphrase.
-	if p.validate && !p.Validate() {
-		return nil, ErrValidationFailed
+	if err := p.Regenerate(); err != nil {
+		return nil, err
 	}
 
 	// Return passphrase.
@@ -145,7 +142,9 @@ func (p Passphrase) String() string {
 // provided parameters.
 func (p *Passphrase) Regenerate() error {
 	// Re(generate) passphrase.
-	p.generate()
+	if err := p.generate(); err != nil {
+		return err
+	}
 
 	// Validate passphrase.
 	if p.validate && !p.Validate() {
@@ -158,29 +157,40 @@ func (p *Passphrase) Regenerate() error {
 // Validate verifies that the passphrase mets certain standards like a secure
 // length and word count.
 func (p *Passphrase) Validate() bool {
-	return (MinPhraseLength <= len(p.String())) && (DefaultWords <= p.wordCount)
+	return MinPhraseLength <= len(p.String()) && DefaultWords <= p.wordCount
 }
 
-func (p *Passphrase) generate() {
-	p.words = nil
+func (p *Passphrase) generate() error {
+	p.words = make([]string, p.wordCount)
 	for i := 0; i < p.wordCount; i++ {
-		id := generateID(math.MaxInt64)
-		p.words = append(p.words, getWord(id))
+		id, err := generateID(math.MaxInt64)
+		if err != nil {
+			return err
+		}
+		p.words[i] = getWord(id)
 	}
 
 	if p.extra {
-		eid := generateID(36)
-		wc := generateID(int64(len(p.words)))
-		p.words[wc] += extras[eid]
+		id, err := generateID(36)
+		if err != nil {
+			return err
+		}
+		wc, err := generateID(int64(len(p.words)))
+		if err != nil {
+			return err
+		}
+		p.words[wc] += extras[id]
 	}
+
+	return nil
 }
 
-func generateID(from int64) int64 {
+func generateID(from int64) (int64, error) {
 	n, err := rand.Int(rand.Reader, big.NewInt(from))
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
-	return n.Int64()
+	return n.Int64(), nil
 }
 
 // getWord retrieves the requested word from the standard word list. The
