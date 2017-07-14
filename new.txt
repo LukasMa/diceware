@@ -1,3 +1,0 @@
-BenchmarkPassphrase-4   	  200000	      6121 ns/op
-PASS
-ok  	github.com/lukasmalkmus/diceware	1.307s
