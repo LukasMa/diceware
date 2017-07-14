@@ -1,4 +1,4 @@
-package diceware
+package diceware_test
 
 import (
 	"fmt"
@@ -7,106 +7,39 @@ import (
 	"runtime"
 	"strings"
 	"testing"
+
+	"github.com/lukasmalkmus/diceware"
 )
 
 func TestNewPassphrase(t *testing.T) {
-	// Should create passphrase with default settings.
-	phrase, err := NewPassphrase(
-		Validate(false),
-	)
-	ok(t, err)
-	equals(t, DefaultExtra, phrase.extra)
-	equals(t, DefaultWords, phrase.wordCount)
-	equals(t, DefaultWords, len(phrase.words))
-}
-
-func TestNewPassphraseExtra(t *testing.T) {
-	testCases := []bool{
-		DefaultExtra,
-		true,
-		false,
-	}
-
-	for _, test := range testCases {
-		phrase, err := NewPassphrase(
-			Extra(test),
-			Validate(false),
-		)
-		ok(t, err)
-		equals(t, test, phrase.extra)
-	}
-}
-
-func TestNewPassphraseWords(t *testing.T) {
-	testCases := []struct {
-		observed    int
+	tests := []struct {
+		words       int
 		expectedErr error
 	}{
-		{MinWords, nil},
-		{MinWords + 1, nil},
-		{DefaultWords - 1, nil},
-		{DefaultWords, nil},
-		{DefaultWords + 1, nil},
-		{DefaultWords + 10, nil},
-		{MinWords - 1, ErrInvalidWordCount},
+		{diceware.MinWords, nil},
+		{diceware.MinWords + 1, nil},
+		{diceware.DefaultWords - 1, nil},
+		{diceware.DefaultWords, nil},
+		{diceware.DefaultWords + 1, nil},
+		{diceware.DefaultWords + 10, nil},
+		{diceware.MinWords - 1, diceware.ErrInvalidWordCount},
 	}
 
-	for _, test := range testCases {
-		phrase, err := NewPassphrase(
-			Words(test.observed),
-			Validate(false),
+	for _, tt := range tests {
+		phrase, err := diceware.NewPassphrase(
+			diceware.Words(tt.words),
+			diceware.Validate(false),
 		)
-		equals(t, test.expectedErr, err)
+		equals(t, tt.expectedErr, err)
 		if err == nil {
-			equals(t, DefaultExtra, phrase.extra)
-			equals(t, test.observed, phrase.wordCount)
-			equals(t, test.observed, len(phrase.words))
+			equals(t, tt.words, len(strings.Fields(phrase.Humanize())))
 		}
 	}
 }
 
-func TestPassphraseHumanize(t *testing.T) {
-	testCases := []*Passphrase{}
-	for i := 0; i < 100; i++ {
-		phrase, err := NewPassphrase(
-			Validate(false),
-		)
-		ok(t, err)
-		testCases = append(testCases, phrase)
-	}
-
-	for _, p := range testCases {
-		str := ""
-		for _, w := range p.words {
-			str += string(w) + " "
-		}
-		str = strings.TrimSpace(str)
-		equals(t, str, p.Humanize())
-	}
-}
-
-func TestPassphraseString(t *testing.T) {
-	testCases := []*Passphrase{}
-	for i := 0; i < 100; i++ {
-		phrase, err := NewPassphrase(
-			Validate(false),
-		)
-		ok(t, err)
-		testCases = append(testCases, phrase)
-	}
-
-	for _, p := range testCases {
-		str := ""
-		for _, w := range p.words {
-			str += string(w)
-		}
-		equals(t, str, p.String())
-	}
-}
-
-func TestPassphraseRegenerate(t *testing.T) {
-	phrase, err := NewPassphrase(
-		Validate(false),
+func TestPassphrase_Regenerate(t *testing.T) {
+	phrase, err := diceware.NewPassphrase(
+		diceware.Validate(false),
 	)
 	ok(t, err)
 	phraseStr := phrase.String()
@@ -114,42 +47,9 @@ func TestPassphraseRegenerate(t *testing.T) {
 	assert(t, phrase.String() != phraseStr, "Expected Regenerate() to create new, unique passphrase.")
 }
 
-func TestPassphraseValidate(t *testing.T) {
-	testCases := []struct {
-		phrase      *Passphrase
-		expectedRes bool
-	}{
-		// Ok.
-		{
-			phrase:      &Passphrase{DefaultExtra, DefaultValidate, 6, []string{"11111", "22222", "33333", "44444", "55555", "66666"}},
-			expectedRes: true,
-		},
-		// To few words.
-		{
-			phrase:      &Passphrase{DefaultExtra, DefaultValidate, 5, []string{"11111", "22222", "33333", "44444", "55555"}},
-			expectedRes: false,
-		},
-		// To few characters.
-		{
-			phrase:      &Passphrase{DefaultExtra, DefaultValidate, 6, []string{"1", "2", "3", "4", "5", "6"}},
-			expectedRes: false,
-		},
-	}
-
-	for _, test := range testCases {
-		equals(t, test.expectedRes, test.phrase.Validate())
-	}
-}
-
-func TestGetWord(t *testing.T) {
-	tc := map[int]string{
-		8192:     "a",
-		8192 * 2: "a",
-	}
-
-	for id, word := range tc {
-		w := getWord(int64(id))
-		equals(t, word, w)
+func BenchmarkPassphrase(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		diceware.NewPassphrase()
 	}
 }
 

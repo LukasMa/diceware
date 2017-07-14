@@ -30,7 +30,7 @@ const (
 	MinPhraseLength = 17
 
 	// MinWords is the required amount of words used to build a passphrase. This
-	// values exists just for convenience and it IS NOT SAFE to use a one word
+	// values exists just for convenience and it is NOT SAFE to use a one word
 	// passphrase!
 	MinWords = 1
 )
